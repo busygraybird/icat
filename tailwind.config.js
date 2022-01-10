@@ -1,9 +1,6 @@
-export default {
+module.exports = {
   mode: 'jit',
-  purge: [
-    // ...
-    './node_modules/@vechaiui/**/*.{js,ts,jsx,tsx}', // path to vechaiui
-  ],
+  purge: ['./node_modules/@vechaiui/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {},
