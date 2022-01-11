@@ -8,7 +8,8 @@
     "start": "rollup -c rollup.config.js -w",
     "build": "rollup -c",
     "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
+    "lint:write": "eslint --debug src/ --fix",
+    "styles:fix": "stylelint ./**/*.{css,scss} --cache --fix"
   },
   "devDependencies": {
     "@fluentui/eslint-plugin": "^1.5.2",
@@ -38,7 +39,9 @@
     "rollup-plugin-tailwind": "^1.0.0",
     "rollup-plugin-typescript2": "^0.31.1",
     "sass": "^1.45.1",
-    "stylelint": "^14.1.0"
+    "stylelint": "^14.1.0",
+    "stylelint-config-standard-scss": "^3.0.0",
+    "stylelint-scss": "^4.1.0"
   },
   "dependencies": {
     "@fluentui/react": "^8.48.1",

@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import CatForm from '../CatForm/CatForm';
+import CatHookForm from '../CatForm/CatHookForm';
 
 const App: FC = () => {
   return (
     <div>
-      <CatForm />
+      <CatHookForm />
     </div>
   );
 };

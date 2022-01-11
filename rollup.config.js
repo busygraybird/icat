@@ -35,6 +35,7 @@ export default {
       extensions: ['.js', '.ts', '.tsx', '.css', '.scss'],
     }),
     eslint(),
+    stylelint(),
     postcss({
       extract: false,
       modules: {
@@ -50,7 +51,6 @@ export default {
     typescript({
       declarations: true,
     }),
-    stylelint(),
     serve({
       open: true,
       verbose: true,
