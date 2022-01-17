@@ -1,11 +1,20 @@
 import { FC } from 'react';
-import CatHookForm from '../CatForm/CatHookForm';
+import CatForm from '../CatForm';
+import { RecoilRoot } from 'recoil';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const App: FC = () => {
   return (
-    <div>
-      <CatHookForm />
-    </div>
+    <RecoilRoot>
+      <BrowserRouter>
+        <div>
+          <Routes>
+            <Route />
+          </Routes>
+          <CatForm />
+        </div>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 };
 

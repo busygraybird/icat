@@ -1,16 +1,13 @@
-import { FC, HTMLAttributes, useEffect, useState } from 'react';
+import { createContext, FC, useEffect, useState } from 'react';
 
 import styles from './StepForm.module.scss';
 import Step from './Step';
 import StepDrops from './StepDrops';
+import { StepForm } from './types';
 
-type StepForm = {
-  Step: FC;
-};
+export const stepsFormContext = createContext({});
 
-const StepForm: StepForm & FC<HTMLAttributes<HTMLDivElement>> = ({
-  children,
-}) => {
+const StepForm: StepForm = ({ children }) => {
   if (!children) return null;
 
   const [stepsCount, setStepsCount] = useState<number>();

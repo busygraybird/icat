@@ -1,7 +1,8 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC } from 'react';
+import { StepProps } from './types';
 
-const Step: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
-  return <div>{children}</div>;
+const Step: FC<StepProps> = ({ children }) => {
+  return <div>{children()}</div>;
 };
 
 export default Step;
