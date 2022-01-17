@@ -9,6 +9,8 @@ import stylelint from 'stylelint';
 import image from '@rollup/plugin-image';
 import typescript from 'rollup-plugin-typescript2';
 import { eslint } from 'rollup-plugin-eslint';
+import tailwind from 'rollup-plugin-tailwind';
+import autoprefixer from 'autoprefixer';
 
 export default {
   input: 'src/index.tsx',
@@ -33,12 +35,6 @@ export default {
       extensions: ['.js', '.ts', '.tsx', '.css', '.scss'],
     }),
     eslint(),
-    commonjs({
-      exclude: 'src/**',
-    }),
-    typescript({
-      declarations: true,
-    }),
     stylelint(),
     postcss({
       extract: false,
@@ -47,6 +43,13 @@ export default {
         localsConvention: 'camelCaseOnly',
       },
       use: ['sass'],
+      plugins: [autoprefixer, tailwind],
+    }),
+    commonjs({
+      exclude: 'src/**',
+    }),
+    typescript({
+      declarations: true,
     }),
     serve({
       open: true,
