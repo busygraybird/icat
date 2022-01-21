@@ -1,6 +1,8 @@
 export type PrimaryCatValues = {
   catName: string;
-  catAge: number;
+  catBreed: string;
+  catSex: 'm' | 'f';
+  catBirthdate: Date;
 };
 
 export type SecondaryCatValues = {

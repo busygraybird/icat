@@ -1,14 +1,17 @@
 import { FC, ReactElement } from 'react';
-import Step from './Step';
 
-interface StepFormProps {
-  children: Array<FC<StepProps>>;
-}
+type StepProps = {
+  children?: (props: Required<StepFormContext>) => ReactElement;
+};
 
-export interface StepProps {
-  children: () => ReactElement;
-}
+export type Step = FC<StepProps>;
 
-export interface StepForm extends FC<StepFormProps> {
-  Step?: FC<StepProps>;
-}
+export type StepForm = FC & {
+  Step: Step;
+};
+
+export type StepFormContext = {
+  currentStep?: number;
+  prevStep?: VoidFunction;
+  nextStep?: VoidFunction;
+};

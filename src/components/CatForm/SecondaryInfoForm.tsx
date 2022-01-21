@@ -1,58 +1,96 @@
 import { FC } from 'react';
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Select,
-  VechaiProvider,
-} from '@vechaiui/react';
-import { catTypesOptions, goodBoyRange } from './constants';
+import { catTypesOptions, goodBoyOptionKey, goodBoyRange } from './constants';
 import { Controller, useForm } from 'react-hook-form';
 import { PartialCatForm, SecondaryCatValues } from './types';
+import {
+  Button,
+  ButtonGroup,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Slider,
+  Stack,
+} from '@mui/material';
 
-const SecondaryInfoForm: FC<PartialCatForm<SecondaryCatValues>> = ({
-  initialValues,
-  handleSubmit,
-}) => {
+type SecondaryInfoFormProps = {
+  prevStep: VoidFunction;
+  nextStep: VoidFunction;
+};
+
+// TODO: refactor component
+const SecondaryInfoForm: FC<
+  PartialCatForm<SecondaryCatValues> & SecondaryInfoFormProps
+> = ({ initialValues, handleSubmit, prevStep, nextStep }) => {
   const {
     control,
     handleSubmit: onSubmit,
-    register,
+    watch,
   } = useForm<SecondaryCatValues>({
     defaultValues: initialValues,
   });
 
+  const watchCatType = watch('catType');
+  const isGoodBoyOptionSelected = +watchCatType === goodBoyOptionKey;
+
+  const handlePrevStep = () => {
+    onSubmit(handleSubmit)();
+    prevStep();
+  };
+
+  const handleNextStep = () => {
+    onSubmit(handleSubmit)();
+    nextStep();
+  };
+
   return (
-    <VechaiProvider>
-      <form onSubmit={onSubmit(handleSubmit)}>
-        <FormControl>
-          <FormLabel>Какой твой котик?</FormLabel>
-          <Select
-            placeholder="Выбери, что описывает твоего котика лучше всего"
-            {...register('catType')}
-          >
-            {Boolean(catTypesOptions?.length) &&
-              catTypesOptions.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-          </Select>
-        </FormControl>
+    <form onSubmit={onSubmit(handleSubmit)}>
+      <Stack spacing={2}>
         <Controller
-          name="goodBoyGrade"
+          name="catType"
           control={control}
           render={({ field }) => (
-            <FormControl>
-              <FormLabel>Насколько твой котик молодец?</FormLabel>
-              <input type="range" {...goodBoyRange} {...field} />
-              <span>{field?.value || 'no value'}</span>
+            <FormControl variant="standard" defaultValue={-1}>
+              <InputLabel>Какой твой котик?</InputLabel>
+              <Select {...field}>
+                <MenuItem value={-1} disabled>
+                  Выбери, что описывает твоего котика лучше всего
+                </MenuItem>
+                {Boolean(catTypesOptions?.length) &&
+                  catTypesOptions.map(({ value, label }) => (
+                    <MenuItem key={value} value={value}>
+                      {label}
+                    </MenuItem>
+                  ))}
+              </Select>
             </FormControl>
           )}
         />
-        <Button variant="solid">i cat</Button>
-      </form>
-    </VechaiProvider>
+        {isGoodBoyOptionSelected && (
+          <Controller
+            name="goodBoyGrade"
+            control={control}
+            render={({ field }) => (
+              <Stack spacing={2}>
+                <InputLabel>Насколько твой котик молодец?</InputLabel>
+                <Stack direction="row" spacing={2}>
+                  <Slider {...field} {...goodBoyRange} />
+                  <span>{field?.value}</span>
+                </Stack>
+              </Stack>
+            )}
+          />
+        )}
+        <ButtonGroup variant="outlined">
+          <Button onClick={handlePrevStep} type="submit">
+            previous
+          </Button>
+          <Button onClick={handleNextStep} type="submit">
+            next
+          </Button>
+        </ButtonGroup>
+      </Stack>
+    </form>
   );
 };
 

@@ -1,40 +1,44 @@
-import { createContext, FC, useEffect, useState } from 'react';
-
 import styles from './StepForm.module.scss';
 import Step from './Step';
 import StepDrops from './StepDrops';
-import { StepForm } from './types';
 
-export const stepsFormContext = createContext({});
+import { StepForm as StepFormType } from './types';
+import usePagination from '../../hooks/usePagination';
+import { stepFormContext } from './stepFormContext';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { catFormValuesState } from '../CatForm/state';
 
-const StepForm: StepForm = ({ children }) => {
-  if (!children) return null;
+const StepForm: StepFormType = ({ children }) => {
+  const childrenIsNotValid =
+    !children || !Array.isArray(children) || children.length <= 1;
 
-  const [stepsCount, setStepsCount] = useState<number>();
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  if (childrenIsNotValid) return undefined;
+
+  const [steps, setSteps] = useState([...children, <Result />]);
 
   useEffect(() => {
-    setStepsCount(Array.isArray(children) ? children.length : 1);
+    setSteps([...children, <Result />]);
   }, [children]);
 
-  const nextStep = () =>
-    setCurrentStep((step) => (step + 1 <= stepsCount - 1 ? step + 1 : 0));
+  const { currentStep, prevStep, nextStep } = usePagination(steps.length);
 
-  const prevStep = () =>
-    setCurrentStep((step) => (step - 1 >= 0 ? step - 1 : stepsCount - 1));
-
-  if (stepsCount && Array.isArray(children)) {
-    return (
+  return (
+    <stepFormContext.Provider value={{ currentStep, prevStep, nextStep }}>
       <div className={styles.form}>
         <div>
-          <div>{children[currentStep]}</div>
+          <div>{steps[currentStep]}</div>
         </div>
-        <StepDrops count={stepsCount} handleChange={setCurrentStep} />
+        <StepDrops count={steps.length - 1} current={currentStep} />
       </div>
-    );
-  }
+    </stepFormContext.Provider>
+  );
+};
 
-  return <div className={styles.form}>{children}</div>;
+const Result = () => {
+  const [catFormValues] = useRecoilState(catFormValuesState);
+
+  return <div>{JSON.stringify(catFormValues, null, 2)}</div>;
 };
 
 StepForm.Step = Step;

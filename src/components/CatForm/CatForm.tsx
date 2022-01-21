@@ -1,36 +1,54 @@
 import StepForm from '../StepForm';
 import SecondaryInfoForm from './SecondaryInfoForm';
 import PrimaryInfoForm from './PrimaryInfoForm';
-import { useRecoilState } from 'recoil';
-import { catFormValuesState } from './state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  catFormPrimaryValuesState,
+  catFormSecondaryValuesState,
+  catFormValuesState,
+} from './state';
 import { SubmitHandler } from 'react-hook-form';
-import { CatValues, PartialCatValues } from './types';
+import {
+  CatValues,
+  PartialCatValues,
+  PrimaryCatValues,
+  SecondaryCatValues,
+} from './types';
 
 const CatForm = () => {
-  const [catFormValues, setCatFormValues] =
-    useRecoilState<CatValues>(catFormValuesState);
+  const [, setCatFormValues] = useRecoilState<CatValues>(catFormValuesState);
+  const catFormPrimaryValues = useRecoilValue<PrimaryCatValues>(
+    catFormPrimaryValuesState,
+  );
+  const catFormSecondaryValues = useRecoilValue<SecondaryCatValues>(
+    catFormSecondaryValuesState,
+  );
 
   const handleSubmit: SubmitHandler<PartialCatValues> = (data) => {
-    alert(JSON.stringify(data, null, 2));
-    setCatFormValues((values) => ({ ...values, ...data }));
+    console.log({ submitted: data });
+    setCatFormValues((values) => {
+      console.log({ ...values, ...data });
+      return { ...values, ...data };
+    });
   };
 
   return (
     <StepForm>
-      <StepForm.Step></StepForm.Step>
       <StepForm.Step>
-        {() => (
+        {(props) => (
           <PrimaryInfoForm
-            initialValues={catFormValues}
+            initialValues={catFormPrimaryValues}
             handleSubmit={handleSubmit}
+            {...props}
           />
         )}
       </StepForm.Step>
       <StepForm.Step>
-        {() => (
+        {(props) => (
           <SecondaryInfoForm
-            initialValues={catFormValues}
+            initialValues={catFormSecondaryValues}
             handleSubmit={handleSubmit}
+            {...props}
           />
         )}
       </StepForm.Step>

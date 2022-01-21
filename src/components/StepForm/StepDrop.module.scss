@@ -1,0 +1,8 @@
+.drop {
+  padding: 4px;
+  display: inline-block;
+
+  &_selected {
+    font-weight: bold;
+  }
+}

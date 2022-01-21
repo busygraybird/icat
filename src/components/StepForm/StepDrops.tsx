@@ -1,24 +1,39 @@
-import { ChangeEventHandler, FC } from 'react';
-import { Radio } from '@vechaiui/react';
+import { FC } from 'react';
+
+import styles from './StepDrop.module.scss';
+import classNames from 'classnames';
 
 type StepDrops = {
   count: number;
-  handleChange: (value: number) => void;
+  current?: number;
 };
 
-const StepDrops: FC<StepDrops> = ({ count, handleChange }) => {
-  const onChange: ChangeEventHandler<HTMLFormElement> = (event) =>
-    handleChange(event.target.value);
+const StepDrops: FC<StepDrops> = ({ count, current }) => {
+  if (count < 0) return undefined;
 
-  const drops = [...new Array<number>(count)].map((_, index) => index);
+  const drops = [...new Array<number>(current + 1)].map((_, index) => index);
 
+  const lastStepsCount = count - current - 1;
+
+  // TODO: refactor styles
   return (
-    <form onChange={onChange}>
-      {Boolean(count) &&
-        drops.map((index) => (
-          <Radio name="currentStep" key={index} value={index} />
-        ))}
-    </form>
+    <div>
+      {drops.map((drop) => (
+        <span
+          key={drop}
+          className={classNames(styles.drop, {
+            [styles.dropSelected]: drop === current,
+          })}
+        >
+          {drop + 1}
+        </span>
+      ))}
+      {Boolean(lastStepsCount) && (
+        <span>
+          ...and {lastStepsCount} step{lastStepsCount > 1 && 's'}
+        </span>
+      )}
+    </div>
   );
 };
 

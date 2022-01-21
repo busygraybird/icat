@@ -9,9 +9,8 @@ import stylelint from 'stylelint';
 import image from '@rollup/plugin-image';
 import typescript from 'rollup-plugin-typescript2';
 import { eslint } from 'rollup-plugin-eslint';
-import tailwind from 'rollup-plugin-tailwind';
 import autoprefixer from 'autoprefixer';
-
+import tailwindcss from 'tailwindcss';
 export default {
   input: 'src/index.tsx',
   output: {
@@ -34,7 +33,10 @@ export default {
       browser: true,
       extensions: ['.js', '.ts', '.tsx', '.css', '.scss'],
     }),
-    eslint(),
+    /*eslint({
+      config: './.eslintrc.json',
+      exclude: './node_modules/',
+    }),*/
     stylelint(),
     postcss({
       extract: false,
@@ -43,7 +45,7 @@ export default {
         localsConvention: 'camelCaseOnly',
       },
       use: ['sass'],
-      plugins: [autoprefixer, tailwind],
+      plugins: [tailwindcss('./tailwind.config.js'), autoprefixer],
     }),
     commonjs({
       exclude: 'src/**',

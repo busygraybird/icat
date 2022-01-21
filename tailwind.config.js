@@ -1,6 +1,7 @@
 module.exports = {
   mode: 'jit',
-  purge: ['./node_modules/@vechaiui/**/*.{js,ts,jsx,tsx}'],
+  purge: ['./build.bundle.js', './src/components/**/*.{tsx,js,jsx}'],
+  // purge: ['./node_modules/@vechaiui/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {},
