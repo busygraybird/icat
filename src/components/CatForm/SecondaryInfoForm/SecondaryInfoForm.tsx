@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { catTypesOptions, goodBoyOptionKey, goodBoyRange } from './constants';
+import { catTypesOptions, goodBoyOptionKey, goodBoyRange } from '../constants';
 import { Controller, useForm } from 'react-hook-form';
-import { PartialCatForm, SecondaryCatValues } from './types';
+import { PartialCatForm, SecondaryCatValues } from '../types';
 import {
   Button,
   ButtonGroup,
@@ -12,7 +12,7 @@ import {
   Slider,
   Stack,
 } from '@mui/material';
-import BorderWrapper from '../BorderWrapper';
+import BorderWrapper from '../../BorderWrapper';
 
 type SecondaryInfoFormProps = {
   hasPrev: boolean;

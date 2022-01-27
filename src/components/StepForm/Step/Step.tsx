@@ -1,6 +1,6 @@
-import { Step } from './types';
+import { Step } from '../types';
 import { useContext } from 'react';
-import { stepFormContext } from './stepFormContext';
+import { stepFormContext } from '../stepFormContext';
 
 const Step: Step = ({ children }) => {
   if (!children) return undefined;

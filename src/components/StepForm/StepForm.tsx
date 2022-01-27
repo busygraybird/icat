@@ -1,5 +1,5 @@
 import styles from './StepForm.module.scss';
-import Step from './Step';
+import Step from './Step/Step';
 import StepDrops from './StepDrops';
 
 import { StepForm as StepFormType } from './types';

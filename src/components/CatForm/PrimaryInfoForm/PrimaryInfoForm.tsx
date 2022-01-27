@@ -9,11 +9,11 @@ import {
   TextField,
   ThemeProvider,
 } from '@fluentui/react';
-import { PartialCatForm, PrimaryCatValues } from './types';
-import { catSexOptions } from './constants';
+import { PartialCatForm, PrimaryCatValues } from '../types';
+import { catSexOptions } from '../constants';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-import { getMaxBirthdate, getMinBirthdate } from './utils';
-import BorderWrapper from '../BorderWrapper';
+import { getMaxBirthdate, getMinBirthdate } from '../utils';
+import BorderWrapper from '../../BorderWrapper';
 
 initializeIcons();
 
