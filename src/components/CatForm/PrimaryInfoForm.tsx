@@ -13,7 +13,7 @@ import { PartialCatForm, PrimaryCatValues } from './types';
 import { catSexOptions } from './constants';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { getMaxBirthdate, getMinBirthdate } from './utils';
-import styles from './PrimaryInfoForm.module.scss';
+import BorderWrapper from '../BorderWrapper';
 
 initializeIcons();
 
@@ -46,7 +46,7 @@ const PrimaryInfoForm: FC<
 
   return (
     <ThemeProvider>
-      <div className={styles.formWrapper}>
+      <BorderWrapper title="with FluentUI & React-Final-Form">
         <Form onSubmit={handleSubmit} initialValues={initialValues}>
           {({ handleSubmit }) => (
             <form>
@@ -108,7 +108,7 @@ const PrimaryInfoForm: FC<
             </form>
           )}
         </Form>
-      </div>
+      </BorderWrapper>
     </ThemeProvider>
   );
 };

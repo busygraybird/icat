@@ -12,6 +12,7 @@ import {
   Slider,
   Stack,
 } from '@mui/material';
+import BorderWrapper from '../BorderWrapper';
 
 type SecondaryInfoFormProps = {
   hasPrev: boolean;
@@ -50,57 +51,59 @@ const SecondaryInfoForm: FC<
   };
 
   return (
-    <form onSubmit={onSubmit(handleSubmit)}>
-      <Stack spacing={2}>
-        <Controller
-          name="catType"
-          control={control}
-          render={({ field }) => (
-            <FormControl variant="standard" defaultValue={-1}>
-              <InputLabel>Какой твой котик?</InputLabel>
-              <Select {...field}>
-                <MenuItem value={-1} disabled>
-                  Выбери, что описывает твоего котика лучше всего
-                </MenuItem>
-                {Boolean(catTypesOptions?.length) &&
-                  catTypesOptions.map(({ value, label }) => (
-                    <MenuItem key={value} value={value}>
-                      {label}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          )}
-        />
-        {isGoodBoyOptionSelected && (
+    <BorderWrapper title="with MaterialUI and React-Hook-Form">
+      <form onSubmit={onSubmit(handleSubmit)}>
+        <Stack spacing={2}>
           <Controller
-            name="goodBoyGrade"
+            name="catType"
             control={control}
             render={({ field }) => (
-              <Stack spacing={2}>
-                <InputLabel>Насколько твой котик молодец?</InputLabel>
-                <Stack direction="row" spacing={2}>
-                  <Slider {...field} {...goodBoyRange} />
-                  <span>{field?.value}</span>
-                </Stack>
-              </Stack>
+              <FormControl variant="standard" defaultValue={-1}>
+                <InputLabel>Какой твой котик?</InputLabel>
+                <Select {...field}>
+                  <MenuItem value={-1} disabled>
+                    Выбери, что описывает твоего котика лучше всего
+                  </MenuItem>
+                  {Boolean(catTypesOptions?.length) &&
+                    catTypesOptions.map(({ value, label }) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
             )}
           />
-        )}
-        <ButtonGroup variant="outlined">
-          {hasPrev && (
-            <Button onClick={handlePrevStep} type="submit">
-              previous
-            </Button>
+          {isGoodBoyOptionSelected && (
+            <Controller
+              name="goodBoyGrade"
+              control={control}
+              render={({ field }) => (
+                <Stack spacing={2}>
+                  <InputLabel>Насколько твой котик молодец?</InputLabel>
+                  <Stack direction="row" spacing={2}>
+                    <Slider {...field} {...goodBoyRange} />
+                    <span>{field?.value}</span>
+                  </Stack>
+                </Stack>
+              )}
+            />
           )}
-          {hasNext && (
-            <Button onClick={handleNextStep} type="submit">
-              next
-            </Button>
-          )}
-        </ButtonGroup>
-      </Stack>
-    </form>
+          <ButtonGroup variant="outlined">
+            {hasPrev && (
+              <Button onClick={handlePrevStep} type="submit">
+                previous
+              </Button>
+            )}
+            {hasNext && (
+              <Button onClick={handleNextStep} type="submit">
+                next
+              </Button>
+            )}
+          </ButtonGroup>
+        </Stack>
+      </form>
+    </BorderWrapper>
   );
 };
 
