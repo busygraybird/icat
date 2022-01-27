@@ -13,10 +13,13 @@ import { PartialCatForm, PrimaryCatValues } from './types';
 import { catSexOptions } from './constants';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { getMaxBirthdate, getMinBirthdate } from './utils';
+import styles from './PrimaryInfoForm.module.scss';
 
 initializeIcons();
 
 type PrimaryInfoFormProps = {
+  hasPrev: boolean;
+  hasNext: boolean;
   prevStep: VoidFunction;
   nextStep: VoidFunction;
 };
@@ -24,9 +27,13 @@ type PrimaryInfoFormProps = {
 const stackTokens: IStackTokens = { childrenGap: 10 };
 
 // TODO: refactor component
+/**
+ * Cat registration form with primary information
+ * (implemented using FluentUI and React-Final-Form).
+ */
 const PrimaryInfoForm: FC<
   PartialCatForm<PrimaryCatValues> & PrimaryInfoFormProps
-> = ({ initialValues, handleSubmit, prevStep, nextStep }) => {
+> = ({ initialValues, hasPrev, hasNext, handleSubmit, prevStep, nextStep }) => {
   const handlePrevStep = (handleSubmit: VoidFunction) => {
     handleSubmit();
     prevStep();
@@ -39,62 +46,69 @@ const PrimaryInfoForm: FC<
 
   return (
     <ThemeProvider>
-      <Form onSubmit={handleSubmit} initialValues={initialValues}>
-        {({ handleSubmit }) => (
-          <form>
-            <Stack tokens={stackTokens}>
-              <Field name="catName">
-                {({ input }) => (
-                  <TextField label="Кличка" required underlined {...input} />
-                )}
-              </Field>
-              <Field name="catBreed">
-                {({ input }) => (
-                  <TextField
-                    label="Порода"
-                    placeholder="Например, Мейн-кун"
-                    underlined
-                    {...input}
-                  />
-                )}
-              </Field>
-              <Field name="catSex">
-                {({ input }) => (
-                  <ChoiceGroup
-                    label="Пол"
-                    selectedKey={input.value}
-                    options={catSexOptions}
-                    onChange={(_, option) => input.onChange(option.key)}
-                  />
-                )}
-              </Field>
-              <Field name="catBirthdate">
-                {({ input }) => (
-                  <DatePicker
-                    {...input}
-                    label="Дата рождения"
-                    minDate={getMinBirthdate(100)}
-                    maxDate={getMaxBirthdate(0)}
-                    onSelectDate={input.onChange}
-                  />
-                )}
-              </Field>
-              <Stack horizontal>
-                <DefaultButton
-                  text="previous"
-                  type="submit"
-                  onClick={() => handlePrevStep(handleSubmit)}
-                />
-                <DefaultButton
-                  text="next"
-                  type="submit"
-                  onClick={() => handleNextStep(handleSubmit)}
-                />
+      <div className={styles.formWrapper}>
+        <Form onSubmit={handleSubmit} initialValues={initialValues}>
+          {({ handleSubmit }) => (
+            <form>
+              <Stack tokens={stackTokens}>
+                <Field name="catName">
+                  {({ input }) => (
+                    <TextField label="Кличка" required underlined {...input} />
+                  )}
+                </Field>
+                <Field name="catBreed">
+                  {({ input }) => (
+                    <TextField
+                      label="Порода"
+                      placeholder="Например, Мейн-кун"
+                      underlined
+                      {...input}
+                    />
+                  )}
+                </Field>
+                <Field name="catSex">
+                  {({ input }) => (
+                    <ChoiceGroup
+                      label="Пол"
+                      selectedKey={input.value}
+                      options={catSexOptions}
+                      onChange={(_, option) => input.onChange(option.key)}
+                    />
+                  )}
+                </Field>
+                <Field name="catBirthdate">
+                  {({ input }) => (
+                    <DatePicker
+                      {...input}
+                      label="Дата рождения"
+                      minDate={getMinBirthdate(100)}
+                      maxDate={getMaxBirthdate(0)}
+                      onSelectDate={input.onChange}
+                      isRequired
+                    />
+                  )}
+                </Field>
+                <Stack horizontal>
+                  {hasPrev && (
+                    <DefaultButton
+                      text="previous"
+                      type="submit"
+                      onClick={() => handlePrevStep(handleSubmit)}
+                    />
+                  )}
+                  {hasNext && (
+                    <DefaultButton
+                      text="next"
+                      type="submit"
+                      onClick={() => handleNextStep(handleSubmit)}
+                    />
+                  )}
+                </Stack>
               </Stack>
-            </Stack>
-          </form>
-        )}
-      </Form>
+            </form>
+          )}
+        </Form>
+      </div>
     </ThemeProvider>
   );
 };

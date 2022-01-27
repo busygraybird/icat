@@ -14,14 +14,20 @@ import {
 } from '@mui/material';
 
 type SecondaryInfoFormProps = {
+  hasPrev: boolean;
+  hasNext: boolean;
   prevStep: VoidFunction;
   nextStep: VoidFunction;
 };
 
 // TODO: refactor component
+/**
+ * Cat registration form with secondary information
+ * (implemented using MaterialUI and React-Hook-Form).
+ */
 const SecondaryInfoForm: FC<
   PartialCatForm<SecondaryCatValues> & SecondaryInfoFormProps
-> = ({ initialValues, handleSubmit, prevStep, nextStep }) => {
+> = ({ initialValues, hasPrev, hasNext, handleSubmit, prevStep, nextStep }) => {
   const {
     control,
     handleSubmit: onSubmit,
@@ -82,12 +88,16 @@ const SecondaryInfoForm: FC<
           />
         )}
         <ButtonGroup variant="outlined">
-          <Button onClick={handlePrevStep} type="submit">
-            previous
-          </Button>
-          <Button onClick={handleNextStep} type="submit">
-            next
-          </Button>
+          {hasPrev && (
+            <Button onClick={handlePrevStep} type="submit">
+              previous
+            </Button>
+          )}
+          {hasNext && (
+            <Button onClick={handleNextStep} type="submit">
+              next
+            </Button>
+          )}
         </ButtonGroup>
       </Stack>
     </form>

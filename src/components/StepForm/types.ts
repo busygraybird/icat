@@ -12,6 +12,8 @@ export type StepForm = FC & {
 
 export type StepFormContext = {
   currentStep?: number;
+  hasPrev?: boolean;
+  hasNext?: boolean;
   prevStep?: VoidFunction;
   nextStep?: VoidFunction;
 };

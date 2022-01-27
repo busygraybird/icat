@@ -11,11 +11,12 @@ type StepDrops = {
 const StepDrops: FC<StepDrops> = ({ count, current }) => {
   if (count < 0) return undefined;
 
-  const drops = [...new Array<number>(current + 1)].map((_, index) => index);
+  const drops = [...new Array<number>(Math.min(current + 1, count))].map(
+    (_, index) => index,
+  );
 
   const lastStepsCount = count - current - 1;
 
-  // TODO: refactor styles
   return (
     <div>
       {drops.map((drop) => (
@@ -28,7 +29,7 @@ const StepDrops: FC<StepDrops> = ({ count, current }) => {
           {drop + 1}
         </span>
       ))}
-      {Boolean(lastStepsCount) && (
+      {lastStepsCount > 0 && (
         <span>
           ...and {lastStepsCount} step{lastStepsCount > 1 && 's'}
         </span>
