@@ -8,9 +8,8 @@ import postcss from 'rollup-plugin-postcss';
 import stylelint from 'stylelint';
 import image from '@rollup/plugin-image';
 import typescript from 'rollup-plugin-typescript2';
-import { eslint } from 'rollup-plugin-eslint';
 import autoprefixer from 'autoprefixer';
-import tailwindcss from 'tailwindcss';
+
 export default {
   input: 'src/index.tsx',
   output: {
@@ -45,7 +44,7 @@ export default {
         localsConvention: 'camelCaseOnly',
       },
       use: ['sass'],
-      plugins: [tailwindcss('./tailwind.config.js'), autoprefixer],
+      plugins: [autoprefixer],
     }),
     commonjs({
       exclude: 'src/**',
