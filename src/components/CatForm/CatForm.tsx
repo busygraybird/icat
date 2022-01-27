@@ -8,28 +8,15 @@ import {
   catFormValuesState,
 } from './state';
 import { SubmitHandler } from 'react-hook-form';
-import {
-  CatValues,
-  PartialCatValues,
-  PrimaryCatValues,
-  SecondaryCatValues,
-} from './types';
+import { PartialCatValues } from './types';
 
 const CatForm = () => {
-  const [, setCatFormValues] = useRecoilState<CatValues>(catFormValuesState);
-  const catFormPrimaryValues = useRecoilValue<PrimaryCatValues>(
-    catFormPrimaryValuesState,
-  );
-  const catFormSecondaryValues = useRecoilValue<SecondaryCatValues>(
-    catFormSecondaryValuesState,
-  );
+  const [, setCatFormValues] = useRecoilState(catFormValuesState);
+  const catFormPrimaryValues = useRecoilValue(catFormPrimaryValuesState);
+  const catFormSecondaryValues = useRecoilValue(catFormSecondaryValuesState);
 
   const handleSubmit: SubmitHandler<PartialCatValues> = (data) => {
-    console.log({ submitted: data });
-    setCatFormValues((values) => {
-      console.log({ ...values, ...data });
-      return { ...values, ...data };
-    });
+    setCatFormValues((values) => ({ ...values, ...data }));
   };
 
   return (

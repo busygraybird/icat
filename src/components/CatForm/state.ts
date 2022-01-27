@@ -1,13 +1,10 @@
 import { atom, selector } from 'recoil';
 import { CatValues, PrimaryCatValues, SecondaryCatValues } from './types';
 
-export const catFormValuesState = atom<CatValues>({
+export const catFormValuesState = atom<Partial<CatValues>>({
   key: 'catFormValuesState',
   default: {
-    catType: null,
     goodBoyGrade: 7,
-    catName: null,
-    catBreed: null,
     catSex: 'm',
     catBirthdate: new Date(),
   },
