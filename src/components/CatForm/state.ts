@@ -1,5 +1,7 @@
 import { atom, selector } from 'recoil';
-import { CatValues, PrimaryCatValues, SecondaryCatValues } from './types';
+import { CatValues } from './types';
+import { PrimaryCatValues } from './PrimaryInfoForm/types';
+import { SecondaryCatValues } from './SecondaryInfoForm/types';
 
 export const catFormValuesState = atom<Partial<CatValues>>({
   key: 'catFormValuesState',

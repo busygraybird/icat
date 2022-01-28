@@ -9,20 +9,15 @@ import {
   TextField,
   ThemeProvider,
 } from '@fluentui/react';
-import { PartialCatForm, PrimaryCatValues } from '../types';
+import { PartialCatForm } from '../types';
 import { catSexOptions } from '../constants';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { getMaxBirthdate, getMinBirthdate } from '../utils';
 import BorderWrapper from '../../BorderWrapper';
+import { StepChildProps } from '../../StepForm/types';
+import { PrimaryCatValues } from './types';
 
 initializeIcons();
-
-type PrimaryInfoFormProps = {
-  hasPrev: boolean;
-  hasNext: boolean;
-  prevStep: VoidFunction;
-  nextStep: VoidFunction;
-};
 
 const stackTokens: IStackTokens = { childrenGap: 10 };
 
@@ -32,7 +27,7 @@ const stackTokens: IStackTokens = { childrenGap: 10 };
  * (implemented using FluentUI and React-Final-Form).
  */
 const PrimaryInfoForm: FC<
-  PartialCatForm<PrimaryCatValues> & PrimaryInfoFormProps
+  PartialCatForm<PrimaryCatValues> & StepChildProps
 > = ({ initialValues, hasPrev, hasNext, handleSubmit, prevStep, nextStep }) => {
   const handlePrevStep = (handleSubmit: VoidFunction) => {
     handleSubmit();

@@ -1,7 +1,9 @@
 import { FC, ReactElement } from 'react';
 
+export type StepChildProps = Required<StepFormContext>;
+
 type StepProps = {
-  children?: (props: Required<StepFormContext>) => ReactElement;
+  children?: FC<StepChildProps> | ReactElement;
 };
 
 export type Step = FC<StepProps>;

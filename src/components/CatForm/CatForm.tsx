@@ -9,6 +9,7 @@ import {
 } from './state';
 import { SubmitHandler } from 'react-hook-form';
 import { PartialCatValues } from './types';
+import PhotoForm from './PhotoForm';
 
 const CatForm = () => {
   const [, setCatFormValues] = useRecoilState(catFormValuesState);
@@ -29,6 +30,9 @@ const CatForm = () => {
             {...props}
           />
         )}
+      </StepForm.Step>
+      <StepForm.Step>
+        <PhotoForm />
       </StepForm.Step>
       <StepForm.Step>
         {(props) => (

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { catTypesOptions, goodBoyOptionKey, goodBoyRange } from '../constants';
 import { Controller, useForm } from 'react-hook-form';
-import { PartialCatForm, SecondaryCatValues } from '../types';
+import { PartialCatForm } from '../types';
 import {
   Button,
   ButtonGroup,
@@ -13,13 +13,8 @@ import {
   Stack,
 } from '@mui/material';
 import BorderWrapper from '../../BorderWrapper';
-
-type SecondaryInfoFormProps = {
-  hasPrev: boolean;
-  hasNext: boolean;
-  prevStep: VoidFunction;
-  nextStep: VoidFunction;
-};
+import { StepChildProps } from '../../StepForm/types';
+import { SecondaryCatValues } from './types';
 
 // TODO: refactor component
 /**
@@ -27,7 +22,7 @@ type SecondaryInfoFormProps = {
  * (implemented using MaterialUI and React-Hook-Form).
  */
 const SecondaryInfoForm: FC<
-  PartialCatForm<SecondaryCatValues> & SecondaryInfoFormProps
+  PartialCatForm<SecondaryCatValues> & StepChildProps
 > = ({ initialValues, hasPrev, hasNext, handleSubmit, prevStep, nextStep }) => {
   const {
     control,

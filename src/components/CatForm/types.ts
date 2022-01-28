@@ -1,15 +1,5 @@
-// TODO: rename types
-export type PrimaryCatValues = {
-  catName: string;
-  catBreed: string;
-  catSex: 'm' | 'f';
-  catBirthdate: Date;
-};
-
-export type SecondaryCatValues = {
-  catType: string;
-  goodBoyGrade: number;
-};
+import { PrimaryCatValues } from './PrimaryInfoForm/types';
+import { SecondaryCatValues } from './SecondaryInfoForm/types';
 
 export type CatValues = PrimaryCatValues & SecondaryCatValues;
 

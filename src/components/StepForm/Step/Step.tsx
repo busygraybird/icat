@@ -8,9 +8,15 @@ const Step: Step = ({ children }) => {
   const { currentStep, hasPrev, hasNext, prevStep, nextStep } =
     useContext(stepFormContext);
 
-  return (
-    <div>{children({ currentStep, hasPrev, hasNext, prevStep, nextStep })}</div>
-  );
+  if (typeof children === 'function') {
+    return (
+      <div>
+        {children({ currentStep, hasPrev, hasNext, prevStep, nextStep })}
+      </div>
+    );
+  }
+
+  return <div>{children}</div>;
 };
 
 export default Step;
