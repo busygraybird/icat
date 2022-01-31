@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes } from 'react';
 
 import styles from './BorderWrapper.module.scss';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 

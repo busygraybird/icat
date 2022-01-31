@@ -1,6 +1,18 @@
 import { DropzoneProps, useDropzone } from 'react-dropzone';
 import { useCallback } from 'react';
-import { IStackTokens, Stack, ThemeProvider } from '@fluentui/react';
+import {
+  IStackTokens,
+  Stack,
+  ThemeProvider,
+  TooltipHost,
+} from '@fluentui/react';
+
+import styles from './FileUpload.module.scss';
+import classNames from 'classnames/bind';
+import { FontIcon } from '@fluentui/react/lib/Icon';
+import Icon from '../Icon';
+
+const cx = classNames.bind(styles);
 
 const stackTokens: IStackTokens = { childrenGap: 10 };
 
@@ -12,6 +24,8 @@ type FileUploadProps<T> = {
 const FileUpload = <T extends { name: string; size: number }>({
   value,
   accept,
+  maxFiles,
+  maxSize,
   handleUpload,
 }: FileUploadProps<T> & DropzoneProps): JSX.Element => {
   const onDrop = useCallback((acceptedFiles) => {
@@ -22,36 +36,126 @@ const FileUpload = <T extends { name: string; size: number }>({
     }
   }, []);
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const validateFileSize = (file: File) => {
+    const defaultMaxFileSize = 1_000_000;
+    const max = maxSize || defaultMaxFileSize;
+
+    if (file.size > max) {
+      return {
+        code: 'size-too-large',
+        message: `Размер изображения больше ${bitsToKBytes(max)} Кб`,
+      };
+    }
+  };
+
+  const {
+    isDragActive,
+    getRootProps,
+    getInputProps,
+    acceptedFiles,
+    fileRejections,
+  } = useDropzone({
     onDrop,
     accept,
+    maxFiles: maxFiles,
+    validator: maxSize ? validateFileSize : null,
   });
 
   const files: Array<T | File> = value || acceptedFiles || null;
+
+  const dropAreaClassNames = cx(styles.uploaderDropArea, {
+    [styles.uploaderDropAreaActive]: isDragActive,
+  });
 
   // TODO: remove style prop
   return (
     <ThemeProvider>
       <Stack tokens={stackTokens}>
-        <div {...getRootProps()}>
+        <div {...getRootProps({ className: dropAreaClassNames })}>
           <input {...getInputProps()} />
+          <Icon
+            iconName="Download"
+            wrapperClassName={styles.uploaderUploadIconWrapper}
+            className={cx(styles.uploaderUploadIcon, styles.darkGreenColor)}
+          />
           <p>Перенесите файлы в это поле или кликните для выбора файлов</p>
+          {Boolean(maxFiles) && (
+            <p>
+              <em>(вы можете загрузить только {maxFiles} файлов)</em>
+            </p>
+          )}
+          {Boolean(maxSize) && (
+            <p>
+              <em>
+                (вы можете загрузить файлы размером не более{' '}
+                <span className={styles.nowrap}>
+                  {bitsToKBytes(maxSize)} Кб)
+                </span>
+              </em>
+            </p>
+          )}
         </div>
-        {Boolean(files?.length) && (
+        {
           <Stack tokens={stackTokens}>
-            {files.map((file) => (
-              <div key={file.name}>
-                <span>{file.name}</span>
-                <span> | </span>
-                <span>{bitsToKBytes(file.size)} Kb</span>
-              </div>
-            ))}
+            {Boolean(files?.length) &&
+              files.map((file) => (
+                <div key={file.name} className={styles.uploaderFileInfo}>
+                  <SuccessIcon />
+                  <span>{file.name}</span>
+                  <span className={styles.nowrap}>
+                    {bitsToKBytes(file.size)} Кб
+                  </span>
+                </div>
+              ))}
+            {Boolean(fileRejections?.length) &&
+              fileRejections.map(({ file, errors }) => (
+                <TooltipHost
+                  key={file.name}
+                  content={
+                    <ul>
+                      {errors.map((e) => (
+                        <li key={e.code}>{e.message}</li>
+                      ))}
+                    </ul>
+                  }
+                >
+                  <div className={styles.uploaderFileInfo}>
+                    <ErrorIcon />
+                    <span>{file.name}</span>
+                    <span className={styles.nowrap}>
+                      {bitsToKBytes(file.size)} Кб
+                    </span>
+                  </div>
+                </TooltipHost>
+              ))}
           </Stack>
-        )}
+        }
       </Stack>
     </ThemeProvider>
   );
 };
+
+const SuccessIcon = () => (
+  <Icon
+    iconName="Accept"
+    className={cx(styles.uploaderFileResultIcon, styles.whiteColor)}
+    wrapperClassName={cx(
+      styles.uploaderFileResultIconWrapper,
+      styles.successBackground,
+    )}
+  />
+);
+
+const ErrorIcon = () => (
+  <Icon
+    iconName="Cancel"
+    className={cx(styles.uploaderFileResultIcon, styles.whiteColor)}
+    wrapperClassName={cx(
+      styles.uploaderFileResultIconWrapper,
+      styles.errorBackground,
+    )}
+  />
+);
 
 // TODO: move to utils
 const bitsToKBytes = (bitSize: number): number => {

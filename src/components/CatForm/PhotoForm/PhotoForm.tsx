@@ -15,6 +15,8 @@ import { PartialCatForm } from '../types';
 import { Image as ImageType, PhotoValues } from './types';
 import { useForm } from 'react-hook-form';
 
+import styles from './PhotoForm.module.scss';
+
 initializeIcons();
 
 const stackTokens: IStackTokens = { childrenGap: 10 };
@@ -62,6 +64,8 @@ const PhotoForm: FC<PartialCatForm<PhotoValues> & StepChildProps> = ({
           <Stack tokens={stackTokens}>
             <FileUpload<ImageType>
               value={watchPhotos}
+              maxFiles={5}
+              maxSize={600_000}
               handleUpload={getSetFieldValue('photos')}
             />
             {Boolean(watchPhotos?.length) && (
@@ -70,6 +74,7 @@ const PhotoForm: FC<PartialCatForm<PhotoValues> & StepChildProps> = ({
                   <Image
                     key={image.name}
                     src={URL.createObjectURL(image)}
+                    className={styles.formPhotoPreview}
                     {...imageProps}
                   />
                 ))}
