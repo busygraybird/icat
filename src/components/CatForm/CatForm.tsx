@@ -3,6 +3,7 @@ import SecondaryInfoForm from './SecondaryInfoForm';
 import PrimaryInfoForm from './PrimaryInfoForm';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  catFormPhotosState,
   catFormPrimaryValuesState,
   catFormSecondaryValuesState,
   catFormValuesState,
@@ -15,6 +16,7 @@ const CatForm = () => {
   const [, setCatFormValues] = useRecoilState(catFormValuesState);
   const catFormPrimaryValues = useRecoilValue(catFormPrimaryValuesState);
   const catFormSecondaryValues = useRecoilValue(catFormSecondaryValuesState);
+  const photoValues = useRecoilValue(catFormPhotosState);
 
   const handleSubmit: SubmitHandler<PartialCatValues> = (data) => {
     setCatFormValues((values) => ({ ...values, ...data }));
@@ -32,7 +34,13 @@ const CatForm = () => {
         )}
       </StepForm.Step>
       <StepForm.Step>
-        <PhotoForm />
+        {(props) => (
+          <PhotoForm
+            initialValues={photoValues}
+            handleSubmit={handleSubmit}
+            {...props}
+          />
+        )}
       </StepForm.Step>
       <StepForm.Step>
         {(props) => (

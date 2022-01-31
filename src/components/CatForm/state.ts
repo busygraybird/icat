@@ -2,6 +2,7 @@ import { atom, selector } from 'recoil';
 import { CatValues } from './types';
 import { PrimaryCatValues } from './PrimaryInfoForm/types';
 import { SecondaryCatValues } from './SecondaryInfoForm/types';
+import { PhotoValues } from './PhotoForm/types';
 
 export const catFormValuesState = atom<Partial<CatValues>>({
   key: 'catFormValuesState',
@@ -42,6 +43,17 @@ export const catFormSecondaryValuesState = selector<SecondaryCatValues>({
     return {
       catType: catFormValues.catType,
       goodBoyGrade: catFormValues.goodBoyGrade,
+    };
+  },
+});
+
+export const catFormPhotosState = selector<PhotoValues>({
+  key: 'catFromPhotosState',
+  get: ({ get }) => {
+    const catFormValues = get(catFormValuesState);
+
+    return {
+      photos: catFormValues.photos,
     };
   },
 });

@@ -12,6 +12,7 @@ type BorderProps = {
 const BorderWrapper: FC<BorderProps & HTMLAttributes<HTMLDivElement>> = ({
   title,
   className,
+  children,
   ...restProps
 }) => {
   return (
@@ -20,7 +21,9 @@ const BorderWrapper: FC<BorderProps & HTMLAttributes<HTMLDivElement>> = ({
         data-title={title}
         className={cx(styles.border, className)}
         {...restProps}
-      />
+      >
+        <div className={styles.borderContent}>{children}</div>
+      </div>
     </div>
   );
 };
