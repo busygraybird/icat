@@ -41,6 +41,12 @@
   }
 }
 
+.file {
+  &__size {
+    text-align: right;
+  }
+}
+
 .nowrap {
   white-space: nowrap;
 }

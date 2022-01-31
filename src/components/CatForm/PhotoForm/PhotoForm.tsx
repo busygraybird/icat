@@ -21,7 +21,7 @@ initializeIcons();
 
 const stackTokens: IStackTokens = { childrenGap: 10 };
 
-const imageProps = { width: 200, height: 200, imageFit: ImageFit.contain };
+const imageProps = { width: 200, maxHeight: 200, imageFit: ImageFit.contain };
 
 // TODO: remove styles
 const PhotoForm: FC<PartialCatForm<PhotoValues> & StepChildProps> = ({

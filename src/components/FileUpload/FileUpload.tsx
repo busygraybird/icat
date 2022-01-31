@@ -2,6 +2,7 @@ import { DropzoneProps, useDropzone } from 'react-dropzone';
 import { useCallback } from 'react';
 import {
   IStackTokens,
+  List,
   Stack,
   ThemeProvider,
   TooltipHost,
@@ -9,7 +10,6 @@ import {
 
 import styles from './FileUpload.module.scss';
 import classNames from 'classnames/bind';
-import { FontIcon } from '@fluentui/react/lib/Icon';
 import Icon from '../Icon';
 
 const cx = classNames.bind(styles);
@@ -43,7 +43,7 @@ const FileUpload = <T extends { name: string; size: number }>({
     if (file.size > max) {
       return {
         code: 'size-too-large',
-        message: `Размер изображения больше ${bitsToKBytes(max)} Кб`,
+        message: `Размер изображения больше ${bitsToKBytes(max)} КБ`,
       };
     }
   };
@@ -89,7 +89,7 @@ const FileUpload = <T extends { name: string; size: number }>({
               <em>
                 (вы можете загрузить файлы размером не более{' '}
                 <span className={styles.nowrap}>
-                  {bitsToKBytes(maxSize)} Кб)
+                  {bitsToKBytes(maxSize)} КБ)
                 </span>
               </em>
             </p>
@@ -102,8 +102,8 @@ const FileUpload = <T extends { name: string; size: number }>({
                 <div key={file.name} className={styles.uploaderFileInfo}>
                   <SuccessIcon />
                   <span>{file.name}</span>
-                  <span className={styles.nowrap}>
-                    {bitsToKBytes(file.size)} Кб
+                  <span className={cx(styles.fileSize, styles.nowrap)}>
+                    {bitsToKBytes(file.size)} КБ
                   </span>
                 </div>
               ))}
@@ -112,18 +112,17 @@ const FileUpload = <T extends { name: string; size: number }>({
                 <TooltipHost
                   key={file.name}
                   content={
-                    <ul>
-                      {errors.map((e) => (
-                        <li key={e.code}>{e.message}</li>
-                      ))}
-                    </ul>
+                    <List
+                      items={errors}
+                      onRenderCell={({ message }) => message}
+                    />
                   }
                 >
                   <div className={styles.uploaderFileInfo}>
                     <ErrorIcon />
                     <span>{file.name}</span>
-                    <span className={styles.nowrap}>
-                      {bitsToKBytes(file.size)} Кб
+                    <span className={cx(styles.fileSize, styles.nowrap)}>
+                      {bitsToKBytes(file.size)} КБ
                     </span>
                   </div>
                 </TooltipHost>
