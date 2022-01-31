@@ -21,6 +21,7 @@ type FileUploadProps<T> = {
   value?: Array<T>;
 };
 
+// TODO: refactor component
 const FileUpload = <T extends { name: string; size: number }>({
   value,
   accept,
