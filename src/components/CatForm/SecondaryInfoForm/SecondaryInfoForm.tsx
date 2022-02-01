@@ -87,12 +87,12 @@ const SecondaryInfoForm: FC<
           <ButtonGroup variant="outlined">
             {hasPrev && (
               <Button onClick={handlePrevStep} type="submit">
-                previous
+                Назад
               </Button>
             )}
             {hasNext && (
               <Button onClick={handleNextStep} type="submit">
-                next
+                Далее
               </Button>
             )}
           </ButtonGroup>
