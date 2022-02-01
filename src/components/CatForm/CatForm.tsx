@@ -26,8 +26,8 @@ const CatForm = () => {
     <StepForm>
       <StepForm.Step>
         {(props) => (
-          <PhotoForm
-            initialValues={photoValues}
+          <PrimaryInfoForm
+            initialValues={catFormPrimaryValues}
             handleSubmit={handleSubmit}
             {...props}
           />
@@ -35,8 +35,8 @@ const CatForm = () => {
       </StepForm.Step>
       <StepForm.Step>
         {(props) => (
-          <PrimaryInfoForm
-            initialValues={catFormPrimaryValues}
+          <PhotoForm
+            initialValues={photoValues}
             handleSubmit={handleSubmit}
             {...props}
           />

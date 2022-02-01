@@ -16,6 +16,8 @@ import { getMaxBirthdate, getMinBirthdate } from '../utils';
 import BorderWrapper from '../../BorderWrapper';
 import { StepChildProps } from '../../StepForm/types';
 import { PrimaryCatValues } from './types';
+import styles from './PrimaryInfo.module.scss';
+import { DEFAULT_MAX_AGE, DEFAULT_MIN_AGE } from './constants';
 
 initializeIcons();
 
@@ -76,8 +78,8 @@ const PrimaryInfoForm: FC<
                     <DatePicker
                       {...input}
                       label="Дата рождения"
-                      minDate={getMinBirthdate(100)}
-                      maxDate={getMaxBirthdate(0)}
+                      minDate={getMinBirthdate(DEFAULT_MAX_AGE)}
+                      maxDate={getMaxBirthdate(DEFAULT_MIN_AGE)}
                       onSelectDate={input.onChange}
                       isRequired
                     />
@@ -86,15 +88,17 @@ const PrimaryInfoForm: FC<
                 <Stack horizontal>
                   {hasPrev && (
                     <DefaultButton
-                      text="previous"
+                      text="Назад"
                       type="submit"
+                      className={styles.formButton}
                       onClick={() => handlePrevStep(handleSubmit)}
                     />
                   )}
                   {hasNext && (
                     <DefaultButton
-                      text="next"
+                      text="Далее"
                       type="submit"
+                      className={styles.formButton}
                       onClick={() => handleNextStep(handleSubmit)}
                     />
                   )}

@@ -65,7 +65,7 @@ const PhotoForm: FC<PartialCatForm<PhotoValues> & StepChildProps> = ({
             <FileUpload<ImageType>
               value={watchPhotos}
               maxFiles={5}
-              maxSize={600_000}
+              maxSize={716_800}
               handleUpload={getSetFieldValue('photos')}
             />
             {Boolean(watchPhotos?.length) && (
@@ -82,10 +82,18 @@ const PhotoForm: FC<PartialCatForm<PhotoValues> & StepChildProps> = ({
             )}
             <Stack horizontal>
               {hasPrev && (
-                <DefaultButton text="previous" onClick={handlePrevStep} />
+                <DefaultButton
+                  text="Назад"
+                  className={styles.formButton}
+                  onClick={handlePrevStep}
+                />
               )}
               {hasNext && (
-                <DefaultButton text="next" onClick={handleNextStep} />
+                <DefaultButton
+                  text="Далее"
+                  className={styles.formButton}
+                  onClick={handleNextStep}
+                />
               )}
             </Stack>
           </Stack>
